@@ -14,6 +14,9 @@ import matplotlib.pyplot as plt
 import imageio
 import os
 
+# Global vars
+# x_space = np.linspace(0,1,100)
+# y_space = np.linspace(0,1,100)
 
 
 def cheker (func,x,y):
@@ -21,16 +24,15 @@ def cheker (func,x,y):
     This funct takes a lambda, or normal function that has to return float
     and returns bulean True or False if the pair x,y below the function
     """
-    return y >= func(x)
+    return y <= func(x)
 
 #Frame maker
 
-def create_frame (x_0,x_max,sctr_in,sctr_out,func,file_name):
+def create_frame (sctr_in,sctr_out,file_name):
     """
     Creates a frame
     """
-    x_space = np.linspace(x_0,x_max,100)
-    y_space = func(x_space)
+    global x_space, y_space
     plt.figure()
     plt.plot(x_space,y_space)
     plt.scatter(sctr_in[0], sctr_in[1])
@@ -38,7 +40,7 @@ def create_frame (x_0,x_max,sctr_in,sctr_out,func,file_name):
     plt.savefig(file_name)
     plt.close()
     
-def Make_Gif (x_points,y_points,func):
+def Make_in_out_Gif (x_points,y_points,func):
     """
     this makes the gif
     """
@@ -48,6 +50,10 @@ def Make_Gif (x_points,y_points,func):
     
     x_min = np.min(x_points)
     x_max = np.max(x_points)
+    
+    global x_space, y_space
+    x_space = np.linspace(x_min,x_max,100)
+    y_space = func(x_space)
     
     in_points = [[],[]]
     out_points = [[],[]]
@@ -61,7 +67,7 @@ def Make_Gif (x_points,y_points,func):
             out_points[0].append(xr)
             out_points[1].append(yr)
         file_name = os.path.join(output_dir, f'frame_{frame_i:.2f}.png')
-        create_frame(x_min, x_max, in_points, out_points, func, file_name)
+        create_frame(in_points, out_points, file_name)
         frame_i += 1
         filenames.append(file_name)
     
@@ -109,4 +115,6 @@ if __name__ == '__main__':
     
     erf_z = lambda z : (2/np.sqrt(np.pi))*np.exp(-z**2)
 
-    Make_Gif(x_r, y_r, erf_z)
+    Make_in_out_Gif(x_r, y_r, erf_z)
+    
+    
