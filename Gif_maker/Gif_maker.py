@@ -28,7 +28,7 @@ def cheker (func,x,y):
 
 #Frame maker
 
-def create_frame (sctr_in,sctr_out,file_name):
+def create_frame_in_out (sctr_in,sctr_out,file_name):
     """
     Creates a frame
     """
@@ -67,7 +67,7 @@ def Make_in_out_Gif (x_points,y_points,func):
             out_points[0].append(xr)
             out_points[1].append(yr)
         file_name = os.path.join(output_dir, f'frame_{frame_i:.2f}.png')
-        create_frame(in_points, out_points, file_name)
+        create_frame_in_out(in_points, out_points, file_name)
         frame_i += 1
         filenames.append(file_name)
     
@@ -83,13 +83,9 @@ def Make_in_out_Gif (x_points,y_points,func):
 
 if __name__ == '__main__':
     
-    
     #lets plot the integrand
     x = np.linspace(0,1.25,100)
     y = (2/np.sqrt(np.pi))*np.exp(-x**2)
-    
-    #plt.plot(x,y)
-    #plt.show()
     
     # Solve it by Hit and miss
     Z = 1.25
@@ -107,11 +103,6 @@ if __name__ == '__main__':
     f = np.sum(hits)/N
     area = f*(Z*y_max)
     print(area)
-    
-    # lets do some fun!
-    #plt.plot(x,y)
-    #plt.scatter(x_r,y_r)
-    #plt.show()
     
     erf_z = lambda z : (2/np.sqrt(np.pi))*np.exp(-z**2)
 
