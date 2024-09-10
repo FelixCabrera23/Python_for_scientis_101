@@ -93,13 +93,13 @@ if __name__ == '__main__':
     
     E2 = []
     
-    for i in range(1000):
+    for i in range(100):
         
         proton_a = proton(0,0)
-        electron_b = electron(0,-1)
-        electron_c = electron(0,1)
+        electron_b = electron(0,-rand())
+        electron_c = electron(0,1+rand())
         system = [proton_a,electron_b,electron_c]
-        e1,e2 = Monte_Carlo(system)
+        e1,e2 = Monte_Carlo(system,N=10000)
         
         Ea_temp = []
         Eb_temp = []
